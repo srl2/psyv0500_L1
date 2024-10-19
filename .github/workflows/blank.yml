@@ -1,0 +1,689 @@
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runners shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runners shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+          name: Run R Analysis
+
+on:
+  push:
+    branches:
+      - main
+  pull_request:
+    branches:
+      - main
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+
+    steps:
+    # Step 1: Check out the repository
+    - name: Checkout repository
+      uses: actions/checkout@v4
+
+    # Step 2: Set up R environment
+    - name: Set up R
+      uses: r-lib/actions/setup-r@v2
+
+    # Step 3: Install R package dependencies
+    - name: Install R packages
+      run: |
+        Rscript -e 'install.packages(c("ggplot2", "dplyr"))'
+        
+    # Step 4: Run your R script for data analysis/visualization
+    - name: Run R script
+      run: |
+        Rscript your_script.R  # Replace with the path to your R script
+
+    # Step 5: Save the analysis results
+    - name: Upload Results
+      uses: actions/upload-artifact@v3
+      with:
+        name: analysis-results
+        path: results/  # Replace with the path to where your results are saved
+# This is a basic workflow to help you get started with Actions
+
+name: CI
+
+# Controls when the workflow will run
+on:
+  # Triggers the workflow on push or pull request events but only for the "main" branch
+  push:
+    branches: [ "main" ]
+  pull_request:
+    branches: [ "main" ]
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# A workflow run is made up of one or more jobs that can run sequentially or in parallel
+jobs:
+  # This workflow contains a single job called "build"
+  build:
+    # The type of runner that the job will run on
+    runs-on: ubuntu-latest
+
+    # Steps represent a sequence of tasks that will be executed as part of the job
+    steps:
+      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
+      - uses: actions/checkout@v4
+
+      # Runs a single command using the runner's shell
+      - name: Run a one-line script
+        run: echo Hello, world!
+
+      # Runs a set of commands using the runner's shell
+      - name: Run a multi-line script
+        run: |
+          echo Add other actions to build,
+          echo test, and deploy your project.
+
+      # Custom steps for R analysis
+      - name: Set up R
+        uses: r-lib/actions/setup-r@v2
+
+      # Install necessary R packages
+      - name: Install R packages
+        run: |
+          Rscript -e 'install.packages(c("ggplot2", "dplyr"))'
+        
+      # Run the R script for data analysis
+      - name: Run R script
+        run: |
+          Rscript your_script.R  # Replace 'your_script.R' with the actual path to your R script
+
+      # Upload results (like plots or datasets)
+      - name: Upload Results
+        uses: actions/upload-artifact@v3
+        with:
+          name: analysis-results
+          path: results/  # Replace 'results/' with the path to where your results are stored
+
+
+R version 4.3.2 (2023-10-31) -- "Eye Holes"
+Copyright (C) 2023 The R Foundation for Statistical Computing
+Platform: aarch64-apple-darwin20 (64-bit)
+
+R is free software and comes with ABSOLUTELY NO WARRANTY.
+You are welcome to redistribute it under certain conditions.
+Type 'license()' or 'licence()' for distribution details.
+
+  Natural language support but running in an English locale
+
+R is a collaborative project with many contributors.
+Type 'contributors()' for more information and
+'citation()' on how to cite R or R packages in publications.
+
+Type 'demo()' for some demos, 'help()' for on-line help, or
+'help.start()' for an HTML browser interface to help.
+Type 'q()' to quit R.
+
+[R.app GUI 1.80 (8281) aarch64-apple-darwin20]
+
+[Workspace restored from /Users/sundesh/.RData]
+[History restored from /Users/sundesh/.Rapp.history]
+
+> load("/Users/sundesh/Downloads/BRFSS2022/BRFSS2022_rev.RData")
+> # Check the structure of the dataset
+> str(brfss22)
+'data.frame':	445132 obs. of  67 variables:
+ $ X_STATE      : Factor w/ 54 levels "Alabama","Alaska",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ X_METSTAT    : Factor w/ 2 levels "Metropolitan counties",..: 1 2 1 1 1 1 1 1 1 2 ...
+ $ X_URBSTAT    : Factor w/ 2 levels "urban counties",..: 1 1 1 1 1 1 1 1 1 2 ...
+ $ MSCODE       : Factor w/ 4 levels "in central city",..: 2 4 2 1 1 2 1 1 1 1 ...
+ $ CHILDREN     : num  0 0 0 0 0 0 0 0 0 0 ...
+ $ MARITAL      : Factor w/ 7 levels "Married","Divorced",..: 1 3 1 1 1 1 2 3 1 1 ...
+ $ EDUCA        : Factor w/ 7 levels "Never attended school or only kindergarten",..: 6 4 6 4 5 4 6 4 6 6 ...
+ $ VETERAN3     : Factor w/ 2 levels "Yes a veteran",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ X_PRACE2     : Factor w/ 9 levels "White","Black or African American",..: 1 1 1 1 1 1 2 1 1 1 ...
+ $ X_HISPANC    : Factor w/ 3 levels "yes Hispanic",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ X_AGEG5YR    : Factor w/ 14 levels "Age 18 to 24",..: 13 13 8 14 5 13 13 13 12 11 ...
+ $ RENTHOM1     : Factor w/ 3 levels "own home","rent",..: 1 1 1 1 1 1 1 1 1 1 ...
+ $ EMPLOY1      : Factor w/ 8 levels "Employed for wages",..: 7 2 7 7 5 7 7 7 1 7 ...
+ $ INCOME3      : Factor w/ 13 levels "Household income less than $10,000",..: 13 5 10 12 5 13 8 7 7 7 ...
+ $ FOODSTMP     : Factor w/ 2 levels "got food stamps SNAP",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ SDHFOOD1     : Factor w/ 7 levels "Always the food that you bought not last, and you didn\x92t have money to get more, in last 12 mo",..: 5 5 5 5 5 5 5 5 5 5 ...
+ $ SEXVAR       : Factor w/ 2 levels "Male","Female": 2 2 2 2 2 1 2 2 2 2 ...
+ $ BIRTHSEX     : Factor w/ 2 levels "male sex at birth",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ SOMALE       : Factor w/ 6 levels "Gay","Straight, that is, not gay",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ SOFEMALE     : Factor w/ 6 levels "Lesbian or Gay",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ TRNSGNDR     : Factor w/ 6 levels "Yes, Transgender, male-to-female",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ HADSEX       : Factor w/ 4 levels "yes had sex in last 6 mo",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ GENHLTH      : Factor w/ 7 levels "Excellent","Very good",..: 2 1 2 1 4 5 2 3 3 3 ...
+ $ PHYSHLTH     : num  0 0 2 0 2 1 0 0 0 1 ...
+ $ MENTHLTH     : num  0 0 3 0 0 0 0 0 0 0 ...
+ $ LSATISFY     : Factor w/ 6 levels "Very satisfied with life",..: 1 1 2 1 1 2 1 1 1 1 ...
+ $ EMTSUPRT     : Factor w/ 7 levels "Always get social and emotional support",..: 1 1 2 1 1 2 1 1 1 1 ...
+ $ SDHISOLT     : Factor w/ 7 levels "Always feel socially isolated from others",..: 5 5 3 3 5 5 4 5 4 4 ...
+ $ SDHSTRE1     : Factor w/ 7 levels "Always feels tense, restless, nervous, or anxious, or is unable to sleep at night because his/her mind is troub"| __truncated__,..: 4 5 5 5 5 5 5 5 5 4 ...
+ $ ADDEPEV3     : Factor w/ 2 levels "Yes ever told had depressive disorder",..: 2 2 2 2 2 2 2 2 2 2 ...
+ $ PRIMINSR     : Factor w/ 13 levels "health ins thr employer or union",..: 13 3 1 13 7 3 2 3 3 3 ...
+ $ CHECKUP1     : Factor w/ 7 levels "last routine checkup within past year (anytime less than 12 months ago)",..: 1 6 1 1 1 1 1 1 1 1 ...
+ $ FLUSHOT7     : Factor w/ 2 levels "Yes got flu shot in last 12 mo",..: 1 2 2 1 2 2 2 1 2 1 ...
+ $ COVIDPOS     : Factor w/ 3 levels "Yes had med prof tell positive test",..: 2 2 1 2 2 2 2 2 2 2 ...
+ $ COVIDSMP     : Factor w/ 2 levels "Yes had covid symptoms for more than 3 months",..: NA NA 1 NA NA NA NA NA NA NA ...
+ $ COVIDPRM     : Factor w/ 13 levels "Tiredness or fatigue",..: NA NA 9 NA NA NA NA NA NA NA ...
+ $ COVIDVA1     : Factor w/ 2 levels "Yes had at least 1 covid vax",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ COVIDNU1     : Factor w/ 4 levels "had 1 covid vax",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ EXERANY2     : Factor w/ 2 levels "Yes exercised in past month",..: 2 2 1 1 1 2 1 2 1 1 ...
+ $ SLEPTIM1     : num  8 6 5 7 9 7 7 8 6 7 ...
+ $ Height_inches: num  NA 63 62 65 62 71 65 64 67 66 ...
+ $ WEIGHT2      : num  NA 150 140 140 119 187 138 162 NA 180 ...
+ $ X_BMI5       : num  NA 26.6 25.6 23.3 21.8 ...
+ $ X_BMI5CAT    : Factor w/ 4 levels "Underweight",..: NA 3 3 2 2 3 2 3 NA 3 ...
+ $ SMOKE100     : Factor w/ 4 levels "yes smoked at least 100 cigs in life",..: 2 2 2 1 2 2 1 2 1 2 ...
+ $ SMOKDAY2     : Factor w/ 5 levels "smoke every day",..: NA NA NA 2 NA NA 3 NA 3 NA ...
+ $ ECIGNOW2     : Factor w/ 6 levels "never used e-cigarettes in life",..: 4 1 1 1 1 1 1 1 4 1 ...
+ $ ALCDAY4      : Factor w/ 43 levels "1 alcoholic drink in past week",..: 42 42 42 42 13 42 15 42 42 11 ...
+ $ AVEDRNK3     : num  NA NA NA NA 2 NA 2 NA NA 1 ...
+ $ DRNK3GE5     : num  NA NA NA NA 0 NA 0 NA NA 0 ...
+ $ MARIJAN1     : num  NA NA NA NA NA NA NA NA NA NA ...
+ $ FIREARM5     : Factor w/ 2 levels "yes firearms in house",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACEDEPRS     : Factor w/ 4 levels "Yes, Adverse Childhood Exper, lived with someone who was depressed, mentally ill, or suicidal",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACEDRINK     : Factor w/ 4 levels "Yes, Adverse Childhood Exper, lived with someone who was a problem drinker or alcoholic",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACEDRUGS     : Factor w/ 4 levels "Yes, Adverse Childhood Exper, lived with someone who used illegal street drugs or who abused prescription medications",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACEPRISN     : Factor w/ 4 levels "Yes, Adverse Childhood Exper, lived with someone who served time or was sentenced to serve time in a prison, ja"| __truncated__,..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACEDIVRC     : Factor w/ 5 levels "Yes, Adverse Childhood Exper, parents separated or divorced",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACEPUNCH     : Factor w/ 5 levels "Adverse Childhood Exper, never: How often did your parents or adults in your home ever slap, hit, kick, punch o"| __truncated__,..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACEHURT1     : Factor w/ 5 levels "Adverse Childhood Exper, never: Not including spanking, (before age 18), how often did a parent or adult in you"| __truncated__,..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACESWEAR     : Factor w/ 5 levels "Adverse Childhood Exper, never: How often did a parent or adult in your home ever swear at you, insult you, or put you down",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ ACETOUCH     : Factor w/ 5 levels "Adverse Childhood Exper, never:  How often did anyone at least 5 years older than you or an adult, ever touch you sexually",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ CIMEMLOS     : Factor w/ 2 levels "experienced confusion memory loss in last 12 mo ",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ CDHOUSE      : Factor w/ 7 levels "Always, as a result of confusion or memory loss, how often have you given up day-to-day household activities or"| __truncated__,..: NA NA NA NA NA NA NA NA NA NA ...
+ $ CDASSIST     : Factor w/ 7 levels "Always need assist because confusion or memory loss",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ CDSOCIAL     : Factor w/ 7 levels "Always confusion or memory loss interfere with work or social activities",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ CAREGIV1     : Factor w/ 3 levels "provided care to family or friend with disability or health condition",..: NA NA NA NA NA NA NA NA NA NA ...
+ $ CRGVREL4     : Factor w/ 17 levels "Mother","Father",..: NA NA NA NA NA NA NA NA NA NA ...
+> 
+> # View the first few rows of the dataset
+> head(brfss22)
+  X_STATE                X_METSTAT      X_URBSTAT
+1 Alabama    Metropolitan counties urban counties
+2 Alabama nonmetropolitan counties urban counties
+3 Alabama    Metropolitan counties urban counties
+4 Alabama    Metropolitan counties urban counties
+5 Alabama    Metropolitan counties urban counties
+6 Alabama    Metropolitan counties urban counties
+                             MSCODE CHILDREN MARITAL
+1 in county containing central city        0 Married
+2                       outside MSA        0 Widowed
+3 in county containing central city        0 Married
+4                   in central city        0 Married
+5                   in central city        0 Married
+6 in county containing central city        0 Married
+                                                         EDUCA VETERAN3
+1                   College 4 years or more (College graduate)       No
+2                       Grade 12 or GED (High school graduate)       No
+3                   College 4 years or more (College graduate)       No
+4                       Grade 12 or GED (High school graduate)       No
+5 College 1 year to 3 years (Some college or technical school)       No
+6                       Grade 12 or GED (High school graduate)       No
+  X_PRACE2 X_HISPANC                 X_AGEG5YR RENTHOM1       EMPLOY1
+1    White        no           Age 80 or older own home       Retired
+2    White        no           Age 80 or older own home Self-employed
+3    White        no              Age 55 to 59 own home       Retired
+4    White        no Dont know/Refused/Missing own home       Retired
+5    White        no              Age 40 to 44 own home   A homemaker
+6    White        no           Age 80 or older own home       Retired
+                                              INCOME3 FOODSTMP SDHFOOD1 SEXVAR
+1                                             Refused       no    Never Female
+2   Less than $35,000 ($25,000 to less than $35,000)        no    Never Female
+3 Less than $200,000 ($150,000 to less than $200,000)       no    Never Female
+4                                  Dont know/Not sure       no    Never Female
+5   Less than $35,000 ($25,000 to less than $35,000)        no    Never Female
+6                                             Refused       no    Never   Male
+  BIRTHSEX SOMALE SOFEMALE TRNSGNDR HADSEX   GENHLTH PHYSHLTH MENTHLTH
+1     <NA>   <NA>     <NA>     <NA>   <NA> Very good        0        0
+2     <NA>   <NA>     <NA>     <NA>   <NA> Excellent        0        0
+3     <NA>   <NA>     <NA>     <NA>   <NA> Very good        2        3
+4     <NA>   <NA>     <NA>     <NA>   <NA> Excellent        0        0
+5     <NA>   <NA>     <NA>     <NA>   <NA>      Fair        2        0
+6     <NA>   <NA>     <NA>     <NA>   <NA>      Poor        1        0
+                  LSATISFY                                EMTSUPRT  SDHISOLT
+1 Very satisfied with life Always get social and emotional support     Never
+2 Very satisfied with life Always get social and emotional support     Never
+3                Satisfied                                 Usually Sometimes
+4 Very satisfied with life Always get social and emotional support Sometimes
+5 Very satisfied with life Always get social and emotional support     Never
+6                Satisfied                                 Usually     Never
+  SDHSTRE1 ADDEPEV3                         PRIMINSR
+1   Rarely       No                          refused
+2    Never       No                         Medicare
+3    Never       No health ins thr employer or union
+4    Never       No                          refused
+5    Never       No                          CHAMPUS
+6    Never       No                         Medicare
+                                                                 CHECKUP1
+1 last routine checkup within past year (anytime less than 12 months ago)
+2                                                                   Never
+3 last routine checkup within past year (anytime less than 12 months ago)
+4 last routine checkup within past year (anytime less than 12 months ago)
+5 last routine checkup within past year (anytime less than 12 months ago)
+6 last routine checkup within past year (anytime less than 12 months ago)
+                        FLUSHOT7                            COVIDPOS
+1 Yes got flu shot in last 12 mo                                  No
+2                             No                                  No
+3                             No Yes had med prof tell positive test
+4 Yes got flu shot in last 12 mo                                  No
+5                             No                                  No
+6                             No                                  No
+                                       COVIDSMP
+1                                          <NA>
+2                                          <NA>
+3 Yes had covid symptoms for more than 3 months
+4                                          <NA>
+5                                          <NA>
+6                                          <NA>
+                                                               COVIDPRM
+1                                                                  <NA>
+2                                                                  <NA>
+3 You did not have any long-term symptoms that limited your activities.
+4                                                                  <NA>
+5                                                                  <NA>
+6                                                                  <NA>
+  COVIDVA1 COVIDNU1                    EXERANY2 SLEPTIM1 Height_inches WEIGHT2
+1     <NA>     <NA>                          No        8            NA      NA
+2     <NA>     <NA>                          No        6            63     150
+3     <NA>     <NA> Yes exercised in past month        5            62     140
+4     <NA>     <NA> Yes exercised in past month        7            65     140
+5     <NA>     <NA> Yes exercised in past month        9            62     119
+6     <NA>     <NA>                          No        7            71     187
+  X_BMI5     X_BMI5CAT                             SMOKE100        SMOKDAY2
+1     NA          <NA>                                   no            <NA>
+2  26.57    Overweight                                   no            <NA>
+3  25.61    Overweight                                   no            <NA>
+4  23.30 Normal Weight yes smoked at least 100 cigs in life smoke some days
+5  21.77 Normal Weight                                   no            <NA>
+6  26.08    Overweight                                   no            <NA>
+                         ECIGNOW2         ALCDAY4 AVEDRNK3 DRNK3GE5 MARIJAN1
+1            not at all right now            none       NA       NA       NA
+2 never used e-cigarettes in life            none       NA       NA       NA
+3 never used e-cigarettes in life            none       NA       NA       NA
+4 never used e-cigarettes in life            none       NA       NA       NA
+5 never used e-cigarettes in life 3 in last month        2        0       NA
+6 never used e-cigarettes in life            none       NA       NA       NA
+  FIREARM5 ACEDEPRS ACEDRINK ACEDRUGS ACEPRISN ACEDIVRC ACEPUNCH ACEHURT1
+1     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>
+2     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>
+3     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>
+4     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>
+5     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>
+6     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>     <NA>
+  ACESWEAR ACETOUCH CIMEMLOS CDHOUSE CDASSIST CDSOCIAL CAREGIV1 CRGVREL4
+1     <NA>     <NA>     <NA>    <NA>     <NA>     <NA>     <NA>     <NA>
+2     <NA>     <NA>     <NA>    <NA>     <NA>     <NA>     <NA>     <NA>
+3     <NA>     <NA>     <NA>    <NA>     <NA>     <NA>     <NA>     <NA>
+4     <NA>     <NA>     <NA>    <NA>     <NA>     <NA>     <NA>     <NA>
+5     <NA>     <NA>     <NA>    <NA>     <NA>     <NA>     <NA>     <NA>
+6     <NA>     <NA>     <NA>    <NA>     <NA>     <NA>     <NA>     <NA>
+> 
+> # Replace 'ace_variable', 'smoking_variable', 'drinking_variable' with actual column names from the data
+> subset_data <- brfss22 %>%
++   select(ace_variable, smoking_variable, drinking_variable)
+Error in brfss22 %>% select(ace_variable, smoking_variable, drinking_variable) : 
+  could not find function "%>%"
+> 
+> # View the subset of data
+> head(subset_data)
+Error: object 'subset_data' not found
+> 
+> # Install the dplyr package if you haven't already
+> install.packages("dplyr")
+--- Please select a CRAN mirror for use in this session ---
+also installing the dependencies ‘fansi’, ‘utf8’, ‘withr’, ‘generics’, ‘pillar’, ‘tibble’, ‘tidyselect’
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/fansi_1.0.6.tgz'
+Content type 'application/x-gzip' length 381008 bytes (372 KB)
+==================================================
+downloaded 372 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/utf8_1.2.4.tgz'
+Content type 'application/x-gzip' length 206924 bytes (202 KB)
+==================================================
+downloaded 202 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/withr_3.0.1.tgz'
+Content type 'application/x-gzip' length 222348 bytes (217 KB)
+==================================================
+downloaded 217 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/generics_0.1.3.tgz'
+Content type 'application/x-gzip' length 79697 bytes (77 KB)
+==================================================
+downloaded 77 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/pillar_1.9.0.tgz'
+Content type 'application/x-gzip' length 648857 bytes (633 KB)
+==================================================
+downloaded 633 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/tibble_3.2.1.tgz'
+Content type 'application/x-gzip' length 684102 bytes (668 KB)
+==================================================
+downloaded 668 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/tidyselect_1.2.1.tgz'
+Content type 'application/x-gzip' length 224103 bytes (218 KB)
+==================================================
+downloaded 218 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/dplyr_1.1.4.tgz'
+Content type 'application/x-gzip' length 1595883 bytes (1.5 MB)
+==================================================
+downloaded 1.5 MB
+
+
+The downloaded binary packages are in
+	/var/folders/bq/h_c4bc8s3m7c7dptmt_4xsth0000gn/T//RtmpiJXZJw/downloaded_packages
+> 
+> # Load dplyr to use its functions
+> library(dplyr)
+
+Attaching package: ‘dplyr’
+
+The following objects are masked from ‘package:stats’:
+
+    filter, lag
+
+The following objects are masked from ‘package:base’:
+
+    intersect, setdiff, setequal, union
+
+> 
+> # Now you can select the relevant columns for your analysis
+> subset_data <- brfss22 %>%
++   select(ACEDEPRS, SMOKE100, ALCDAY4)
+> 
+> # View the subset of the data
+> head(subset_data)
+  ACEDEPRS                             SMOKE100         ALCDAY4
+1     <NA>                                   no            none
+2     <NA>                                   no            none
+3     <NA>                                   no            none
+4     <NA> yes smoked at least 100 cigs in life            none
+5     <NA>                                   no 3 in last month
+6     <NA>                                   no            none
+> 
+> # Load ggplot2 for visualization
+> library(ggplot2)
+Error in library(ggplot2) : there is no package called ‘ggplot2’
+> 
+> # Boxplot comparing smoking frequency based on ACE (depression experience)
+> ggplot(subset_data, aes(x = ACEDEPRS, fill = SMOKE100)) +
++   geom_bar() +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal()
+Error in ggplot(subset_data, aes(x = ACEDEPRS, fill = SMOKE100)) : 
+  could not find function "ggplot"
+> 
+> install.packages("ggplot2")
+also installing the dependencies ‘colorspace’, ‘farver’, ‘labeling’, ‘munsell’, ‘RColorBrewer’, ‘viridisLite’, ‘gtable’, ‘isoband’, ‘scales’
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/colorspace_2.1-1.tgz'
+Content type 'application/x-gzip' length 2656469 bytes (2.5 MB)
+==================================================
+downloaded 2.5 MB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/farver_2.1.2.tgz'
+Content type 'application/x-gzip' length 1968917 bytes (1.9 MB)
+==================================================
+downloaded 1.9 MB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/labeling_0.4.3.tgz'
+Content type 'application/x-gzip' length 60952 bytes (59 KB)
+==================================================
+downloaded 59 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/munsell_0.5.1.tgz'
+Content type 'application/x-gzip' length 244085 bytes (238 KB)
+==================================================
+downloaded 238 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/RColorBrewer_1.1-3.tgz'
+Content type 'application/x-gzip' length 53104 bytes (51 KB)
+==================================================
+downloaded 51 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/viridisLite_0.4.2.tgz'
+Content type 'application/x-gzip' length 1297471 bytes (1.2 MB)
+==================================================
+downloaded 1.2 MB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/gtable_0.3.5.tgz'
+Content type 'application/x-gzip' length 217938 bytes (212 KB)
+==================================================
+downloaded 212 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/isoband_0.2.7.tgz'
+Content type 'application/x-gzip' length 1874762 bytes (1.8 MB)
+==================================================
+downloaded 1.8 MB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/scales_1.3.0.tgz'
+Content type 'application/x-gzip' length 706986 bytes (690 KB)
+==================================================
+downloaded 690 KB
+
+trying URL 'https://lib.stat.cmu.edu/R/CRAN/bin/macosx/big-sur-arm64/contrib/4.3/ggplot2_3.5.1.tgz'
+Content type 'application/x-gzip' length 4967644 bytes (4.7 MB)
+==================================================
+downloaded 4.7 MB
+
+
+The downloaded binary packages are in
+	/var/folders/bq/h_c4bc8s3m7c7dptmt_4xsth0000gn/T//RtmpiJXZJw/downloaded_packages
+> 
+>  library(ggplot2)
+> 
+> 
+> # Boxplot comparing smoking frequency based on ACE (depression experience)
+> ggplot(subset_data, aes(x = ACEDEPRS, fill = SMOKE100)) +
++   geom_bar() +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal()
+> 
+> 
+> 
+> > # Boxplot comparing smoking frequency based on ACE (depression experience)
+Error: unexpected '>' in ">"
+> > ggplot(subset_data, aes(x = ACEDEPRS, fill = SMOKE100)) +
+Error: unexpected '>' in ">"
+> +   geom_bar() +
++ +   labs(title = "Smoking Behavior by ACE Depression Experience",
++ +        x = "ACE Depression Experience",
+Error: unexpected '=' in:
+"+   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x ="
+> +        y = "Count of Smoking Behavior") +
+Error: unexpected ')' in "+        y = "Count of Smoking Behavior")"
+> +   theme_minimal()
+Error in `+.gg`:
+! Cannot use `+` with a single argument.
+ℹ Did you accidentally put `+` on a new line?
+Run `rlang::last_trace()` to see where the error occurred.
+> > 
+Error: unexpected '>' in ">"
+> 
+> # Boxplot comparing smoking frequency based on ACE (depression experience)
+> ggplot(subset_data, aes(x = ACEDEPRS, fill = SMOKE100)) +
++   geom_bar() +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal()
+> 
+> # Filter out rows with NA values in ACEDEPRS or SMOKE100
+> filtered_data <- subset_data %>%
++   filter(!is.na(ACEDEPRS) & !is.na(SMOKE100))
+> 
+> # Create the plot again without NAs
+> ggplot(filtered_data, aes(x = ACEDEPRS, fill = SMOKE100)) +
++   geom_bar() +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal()
+> 
+> # Create the plot with rotated x-axis labels
+> ggplot(filtered_data, aes(x = ACEDEPRS, fill = SMOKE100)) +
++   geom_bar() +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal() +
++   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+> 
+> # Load necessary libraries
+> library(ggplot2)
+> library(dplyr)
+> 
+> # Calculate percentages for each group
+> filtered_data %>%
++   group_by(ACEDEPRS, SMOKE100) %>%
++   summarise(count = n()) %>%
++   mutate(percentage = count / sum(count) * 100) -> plot_data
+`summarise()` has grouped output by 'ACEDEPRS'. You can override using the
+`.groups` argument.
+> 
+> # Create the refined plot with percentages
+> ggplot(plot_data, aes(x = ACEDEPRS, y = count, fill = SMOKE100)) +
++   geom_bar(stat = "identity", position = "stack") +
++   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
++             position = position_stack(vjust = 0.5), size = 3) +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal() +
++   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+> 
+> # Adding a custom color palette
+> ggplot(plot_data, aes(x = ACEDEPRS, y = count, fill = SMOKE100)) +
++   geom_bar(stat = "identity", position = "stack") +
++   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
++             position = position_stack(vjust = 0.5), size = 3) +
++   scale_fill_manual(values = c("yes smoked at least 100 cigs in life" = "firebrick",
++                                "no" = "forestgreen",
++                                "dont know not sure" = "skyblue",
++                                "refused" = "grey")) +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal() +
++   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+> 
+> # Reorder ACEDEPRS categories
+> filtered_data$ACEDEPRS <- factor(filtered_data$ACEDEPRS, 
++                                  levels = c("Yes, lived with someone who was depressed, mentally ill, or suicidal", 
++                                             "No", "dont know not sure", "refused"))
+> 
+> # Recreate the plot with reordered categories
+> ggplot(plot_data, aes(x = ACEDEPRS, y = count, fill = SMOKE100)) +
++   geom_bar(stat = "identity", position = "stack") +
++   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
++             position = position_stack(vjust = 0.5), size = 3) +
++   scale_fill_manual(values = c("yes smoked at least 100 cigs in life" = "firebrick",
++                                "no" = "forestgreen",
++                                "dont know not sure" = "skyblue",
++                                "refused" = "grey")) +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal() +
++   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+> 
+> ggplot(plot_data, aes(x = ACEDEPRS, y = count, fill = SMOKE100)) +
++   geom_bar(stat = "identity", position = "stack") +
++   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
++             position = position_stack(vjust = 0.5), size = 3) +
++   scale_fill_manual(values = c("yes smoked at least 100 cigs in life" = "firebrick",
++                                "no" = "forestgreen",
++                                "dont know not sure" = "skyblue",
++                                "refused" = "grey")) +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   ylim(0, 50000) +  # Adjust this based on your data
++   theme_minimal() +
++   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+> 
+> ggsave("refined_plot.png", width = 10, height = 6)
+> 
+> # Filter out "dont know not sure" and "refused"
+> filtered_data_refined <- filtered_data %>%
++   filter(!ACEDEPRS %in% c("dont know not sure", "refused"))
+> 
+> # Recalculate percentages and recreate the plot
+> plot_data_refined <- filtered_data_refined %>%
++   group_by(ACEDEPRS, SMOKE100) %>%
++   summarise(count = n()) %>%
++   mutate(percentage = count / sum(count) * 100)
+`summarise()` has grouped output by 'ACEDEPRS'. You can override using the
+`.groups` argument.
+> 
+> # Plot the refined data
+> ggplot(plot_data_refined, aes(x = ACEDEPRS, y = count, fill = SMOKE100)) +
++   geom_bar(stat = "identity", position = "stack") +
++   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
++             position = position_stack(vjust = 0.5), size = 3) +
++   scale_fill_manual(values = c("yes smoked at least 100 cigs in life" = "firebrick",
++                                "no" = "forestgreen",
++                                "dont know not sure" = "skyblue",
++                                "refused" = "grey")) +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "ACE Depression Experience",
++        y = "Count of Smoking Behavior") +
++   theme_minimal() +
++   theme(axis.text.x = element_text(angle = 45, hjust = 1))
+> 
+> # Refine axis labels and legend title
+> ggplot(plot_data_refined, aes(x = ACEDEPRS, y = count, fill = SMOKE100)) +
++   geom_bar(stat = "identity", position = "stack") +
++   geom_text(aes(label = paste0(round(percentage, 1), "%")), 
++             position = position_stack(vjust = 0.5), size = 3) +
++   scale_fill_manual(values = c("yes smoked at least 100 cigs in life" = "firebrick",
++                                "no" = "forestgreen")) +
++   labs(title = "Smoking Behavior by ACE Depression Experience",
++        x = "Adverse Childhood Experience: Depression",
++        y = "Number of Respondents",
++        fill = "Smoking Behavior") +
++   theme_minimal() +
++   theme(axis.text.x = element_text(angle = 45, hjust = 1, size = 10))
+> 
+> 
